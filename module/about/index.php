@@ -1,0 +1,10 @@
+<?php
+// ST. JOSEPH CATHOLIC SCHOOL OF SAGAY INC.
+
+require_once("../../include/initialize.php");
+
+$title   = "About";
+$content = 'list.php';
+
+require_once("../../theme/template.php");
+?>
