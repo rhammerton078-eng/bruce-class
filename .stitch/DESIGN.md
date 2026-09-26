@@ -1,7 +1,74 @@
 # Design System: Bruce Class
-**Project ID:** `[pending — no Stitch project created yet; see .stitch/README.md]`
-**Source screen:** `.stitch/designs/index.html` (Home, local draft v0), screenshots `index.png` and `index-mobile.png`
-**Status:** v1.0, the baseline for every Stitch prompt and every page built in the loop.
+**Project ID:** `5404652156695515193` (Stitch project "Bruce Class", private)
+**Stitch Home screen:** "Bruce Class — Home", `projects/5404652156695515193/screens/914626fc0e2c4714bdf7986090a1e0d8` (DESKTOP, 2560 × 21318 px canvas)
+**Stitch design system:** `assets/9364784798711867201` "Bruce Class Editorial"
+**Local reference draft:** `.stitch/designs/index.html` (hand-built v0), screenshots `index.png` and `index-mobile.png`
+**Status:** v1.1. Sections 1–11 are the intended system. Section 0 records what Stitch actually generated, as far as it can be verified through Stitch MCP metadata. **The visual analysis of the real screen is still pending**, because this environment's network policy blocks the screen's HTML and screenshot downloads (see §0.4).
+
+---
+
+## 0. Stitch Source of Truth (verified through Stitch MCP)
+
+### 0.1 Verified project and screen record
+| Item | Value (from `get_project` / `list_screens` / `get_screen`) |
+|---|---|
+| Project | `projects/5404652156695515193`, title "Bruce Class", `PROJECT_DESIGN`, origin `STITCH`, visibility `PRIVATE`, role `OWNER` |
+| Created | 2026-09-26T15:11:53Z |
+| Screen | "Bruce Class — Home", id `914626fc0e2c4714bdf7986090a1e0d8`, device `DESKTOP`, width 2560, height 21318 |
+| HTML file | `projects/5404652156695515193/files/b6705099e1f54a0d8f057d3dd15824f6` (text/html) |
+| Screenshot file | `projects/5404652156695515193/files/074a215235c2487c99c9ca36c70f7b2c` |
+| Screens in project | Exactly one |
+
+### 0.2 Theme Stitch applied to the project (verified)
+| Setting | Stitch value | Intended (Sections 2–3) | Status |
+|---|---|---|---|
+| Color mode | `LIGHT`, variant `NEUTRAL` | Light | Matches |
+| Seed / override primary | `#1C3B5A` | Harbor Navy `#1C3B5A` | Matches |
+| Override secondary | `#A87A2E` | Heritage Brass `#A87A2E` | Matches |
+| Override neutral | `#F6F4EF` | Warm Paper `#F6F4EF` | Matches |
+| Headline font | **Newsreader** | Fraunces | **Differs.** Stitch's font list has no Fraunces, so Newsreader is the theme font. The generation prompt asked for Fraunces via Google Fonts. Whether the screen HTML uses Fraunces or Newsreader is unverified. |
+| Body font | Geist | Geist | Matches |
+| Label font | Geist | Geist Mono | **Differs.** Stitch's font list has no Geist Mono, so labels fall back to Geist unless the HTML loads Geist Mono. Unverified. |
+| Roundness | `ROUND_EIGHT` (8px) | 8px buttons and images | Matches |
+| Spacing scale | `2` | Section 5 scale | Stitch-internal value; mapping unverified |
+
+### 0.3 Palette Stitch generated from the seed colours (verified `namedColors`)
+Stitch expands the seed colours into Material-style roles. These are the values its screens use by default:
+
+| Stitch role | Hex | Closest intended token | Note |
+|---|---|---|---|
+| `background` / `surface` / `surface_bright` | `#FBF9F4` | Warm Paper `#F6F4EF` | Lighter and less warm than intended |
+| `surface_container_lowest` | `#FFFFFF` | Clean Surface White `#FFFFFF` | Matches |
+| `surface_container_low` | `#F5F4ED` | Warm Paper `#F6F4EF` | Near match |
+| `surface_container` | `#EFEEE6` | Soft Linen `#EDEAE2` | Near match |
+| `surface_container_high` / `highest` | `#E8E9E0` / `#E2E3D9` | — | Additional tonal steps |
+| `on_background` / `on_surface` | `#31332C` | Midnight Ink `#151B28` | **Lighter, olive-grey rather than ink navy** |
+| `on_surface_variant` | `#5E6058` | Slate Muted `#5A6272` | Near match, warmer |
+| `outline` / `outline_variant` | `#797C73` / `#B1B3A9` | Firm Stone `#C9C2B3` / Hairline Stone `#DCD7CB` | Darker than intended |
+| `primary` | `#436081` | Harbor Navy `#1C3B5A` | **Noticeably lighter.** `primary_dim` is `#375475` and `on_primary_fixed` is `#234160` |
+| `primary_container` / `primary_fixed` | `#D1E4FF` | — | Light blue tint; not in the intended system |
+| `on_primary` | `#F5F8FF` | White | Near match |
+| `secondary` | `#80570A` | Burnished Brass `#86601F` | Near match |
+| `secondary_container` | `#FFDDB0` | Featured badge `#F2E8D5` | More saturated |
+| `tertiary` | `#595E78` | — | Muted indigo; not in the intended system |
+| `error` | `#9F403D` | Brick Red `#A2382C` | Near match |
+| `inverse_surface` | `#0E0E0C` | Night Ink `#0F1522` | Warmer near-black |
+
+Contrast of the Stitch defaults (WCAG): `#31332C` on `#FBF9F4` is about 12.2:1; `#436081` on `#FBF9F4` is about 6.2:1; white on `#436081` is about 6.5:1. All pass AA.
+
+**Rule until the visual check is done:** Sections 2–11 remain the source of truth for new prompts. Every baton prompt must keep naming the exact hex values (Harbor Navy `#1C3B5A`, Midnight Ink `#151B28`, Warm Paper `#F6F4EF`), because Stitch's automatic roles drift lighter (`primary #436081`, text `#31332C`).
+
+### 0.4 Pending: visual analysis of the real Home screen
+The `design-md` skill needs the screen's HTML (Tailwind config, classes, layout) and screenshot. Both downloads were refused by this cloud environment's egress policy:
+
+- `contribution.usercontent.google.com` (screen HTML)
+- `lh3.googleusercontent.com` (screenshots)
+
+Once both hosts are allowed in the environment's network settings:
+1. Download the HTML to `.stitch/designs/index.html` and the screenshot (with `=w2560`) to `.stitch/designs/index.png`, keeping the local draft under a new name.
+2. Re-run `design-md` and replace or confirm Sections 1–7 and 11 with what the screen actually uses: fonts actually loaded, the Tailwind colour config, component classes, section order and layout.
+3. Resolve the differences in §0.2 and §0.3.
+4. Record the screen in `.stitch/metadata.json` under `screens.index`.
 
 > The `design-md` skill normally reads a finished Stitch screen through the Stitch MCP server. That server was not connected during setup. This file follows the `design-md` output format (Sections 1–5), adds the Stitch prompt block the `stitch-loop` skill needs (Section 6), and adds the rules from `taste-design` (Sections 7–11). Its values come from the local reference home screen. Once the home screen exists in Stitch, run `design-md` again against it and reconcile any differences here.
 
