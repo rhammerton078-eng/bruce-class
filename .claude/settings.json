@@ -1,0 +1,6 @@
+{
+  "enabledMcpjsonServers": ["stitch"],
+  "permissions": {
+    "allow": ["mcp__stitch"]
+  }
+}
