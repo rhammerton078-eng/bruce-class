@@ -3,7 +3,7 @@
 **Stitch Home screen:** "Bruce Class — Home", `projects/5404652156695515193/screens/914626fc0e2c4714bdf7986090a1e0d8` (DESKTOP, 2560 × 21318 px canvas)
 **Stitch design system:** `assets/9364784798711867201` "Bruce Class Editorial"
 **Local reference draft:** `.stitch/designs/index.html` (hand-built v0), screenshots `index.png` and `index-mobile.png`
-**Status:** v1.1. Sections 1–11 are the intended system. Section 0 records what Stitch actually generated, as far as it can be verified through Stitch MCP metadata. **The visual analysis of the real screen is still pending**, because this environment's network policy blocks the screen's HTML and screenshot downloads (see §0.4).
+**Status:** v1.2. Sections 1–11 are the intended system and are unchanged. Section 0 records what Stitch actually generated, **verified against the real screen's HTML, its Stitch screenshot and a local render of that HTML at 390, 820 and 1440 px** (see §0.4–§0.9).
 
 ---
 
@@ -26,11 +26,11 @@
 | Seed / override primary | `#1C3B5A` | Harbor Navy `#1C3B5A` | Matches |
 | Override secondary | `#A87A2E` | Heritage Brass `#A87A2E` | Matches |
 | Override neutral | `#F6F4EF` | Warm Paper `#F6F4EF` | Matches |
-| Headline font | **Newsreader** | Fraunces | **Differs.** Stitch's font list has no Fraunces, so Newsreader is the theme font. The generation prompt asked for Fraunces via Google Fonts. Whether the screen HTML uses Fraunces or Newsreader is unverified. |
+| Headline font | **Newsreader** | Fraunces | **Differs.** Stitch's font list has no Fraunces, so Newsreader is the theme font. The generation prompt asked for Fraunces via Google Fonts. **Verified (§0.5): the screen HTML loads and uses Fraunces; Newsreader is not used.** |
 | Body font | Geist | Geist | Matches |
-| Label font | Geist | Geist Mono | **Differs.** Stitch's font list has no Geist Mono, so labels fall back to Geist unless the HTML loads Geist Mono. Unverified. |
+| Label font | Geist | Geist Mono | **Differs.** Stitch's font list has no Geist Mono, **Verified (§0.5): the screen HTML loads Geist Mono and maps `label`/`mono` to it.** |
 | Roundness | `ROUND_EIGHT` (8px) | 8px buttons and images | Matches |
-| Spacing scale | `2` | Section 5 scale | Stitch-internal value; mapping unverified |
+| Spacing scale | `2` | Section 5 scale | Stitch-internal value; the HTML uses Tailwind's default 4px scale (see §0.6) |
 
 ### 0.3 Palette Stitch generated from the seed colours (verified `namedColors`)
 Stitch expands the seed colours into Material-style roles. These are the values its screens use by default:
@@ -56,21 +56,120 @@ Stitch expands the seed colours into Material-style roles. These are the values 
 
 Contrast of the Stitch defaults (WCAG): `#31332C` on `#FBF9F4` is about 12.2:1; `#436081` on `#FBF9F4` is about 6.2:1; white on `#436081` is about 6.5:1. All pass AA.
 
-**Rule until the visual check is done:** Sections 2–11 remain the source of truth for new prompts. Every baton prompt must keep naming the exact hex values (Harbor Navy `#1C3B5A`, Midnight Ink `#151B28`, Warm Paper `#F6F4EF`), because Stitch's automatic roles drift lighter (`primary #436081`, text `#31332C`).
+**Resolved by the visual check (§0.5):** The screen's HTML does **not** use most of these drifted defaults. Its inline Tailwind config overrides the key roles with the intended hex values (`primary #1C3B5A`, `primary-dim #142C45`, `background`/`surface #F6F4EF`, `on-background #151B28`, `on-surface-variant #5A6272`, `outline #DCD7CB`, `inverse-surface #0F1522`, `inverse-on-surface #A9B0BD`) and adds `white-surface #FFFFFF`, `brass #A87A2E`, `brass-kicker #86601F` and `brass-lamp #D2AE6A`. **Rule:** Every baton prompt must still name the exact hex values from Section 2, because naming them is what produced these overrides.
 
-### 0.4 Pending: visual analysis of the real Home screen
-The `design-md` skill needs the screen's HTML (Tailwind config, classes, layout) and screenshot. Both downloads were refused by this cloud environment's egress policy:
+### 0.4 How the screen was analysed
+- `get_screen` on `projects/5404652156695515193/screens/914626fc0e2c4714bdf7986090a1e0d8` returned title "Bruce Class — Home", `DESKTOP`, 2560 × 21318, plus the HTML and screenshot download URLs.
+- The HTML (about 65 KB, 992 lines) was downloaded from `contribution.usercontent.google.com`. The screenshot was downloaded from `lh3.googleusercontent.com` at `=w1280` (1280 × 10659 px) and reviewed section by section.
+- The HTML loads Tailwind from `cdn.tailwindcss.com`, which this environment's network policy blocks. For the responsive check, the page's own `tailwind.config` was compiled locally with Tailwind v3 (plus the forms and container-queries plugins) and rendered in Chromium at 390, 820 and 1440 px. Content images do not load in that local render, so it verifies layout, computed sizes and colours, not imagery.
+- Nothing was generated, edited or regenerated in Stitch. The project still has exactly one screen.
 
-- `contribution.usercontent.google.com` (screen HTML)
-- `lh3.googleusercontent.com` (screenshots)
+### 0.5 Verified tokens in the screen's HTML
+**Fonts (verified: the Newsreader and Geist questions in §0.2 are resolved).** The page loads `Fraunces:ital,opsz,wght@0,9..144,300..400;1,9..144,300..400`, `Geist:wght@300;400;500;600`, `Geist+Mono:wght@400;500;600` and Material Symbols Outlined (the Material Symbols stylesheet is linked twice). Tailwind maps `headline` and `display` to Fraunces, `body` to Geist, and `mono` and `label` to Geist Mono. **Newsreader is not used anywhere.** Fraunces is loaded only up to weight 400, so the H3 weights of 400–420 in Section 3 are capped at 400.
 
-Once both hosts are allowed in the environment's network settings:
-1. Download the HTML to `.stitch/designs/index.html` and the screenshot (with `=w2560`) to `.stitch/designs/index.png`, keeping the local draft under a new name.
-2. Re-run `design-md` and replace or confirm Sections 1–7 and 11 with what the screen actually uses: fonts actually loaded, the Tailwind colour config, component classes, section order and layout.
-3. Resolve the differences in §0.2 and §0.3.
-4. Record the screen in `.stitch/metadata.json` under `screens.index`.
+**Colours used by the page, beyond the overrides in §0.3:**
 
-> The `design-md` skill normally reads a finished Stitch screen through the Stitch MCP server. That server was not connected during setup. This file follows the `design-md` output format (Sections 1–5), adds the Stitch prompt block the `stitch-loop` skill needs (Section 6), and adds the rules from `taste-design` (Sections 7–11). Its values come from the local reference home screen. Once the home screen exists in Stitch, run `design-md` again against it and reconcile any differences here.
+| Tailwind token | Hex | Where it is used | Intended (Section 2) |
+|---|---|---|---|
+| `surface-container` / `-low` / `-high` | `#EFEEE6` / `#F5F4ED` / `#E8E9E0` | Image-frame fills, advisory notes, hover fills | Soft Linen `#EDEAE2` (near match) |
+| `outline-variant` | `#B1B3A9` | Borders at 15–30% opacity on the dark band | Night Rule `#27304A` |
+| `on-secondary` | `#FFF8F2` | Headings, active text and the inverse button fill on Night Ink | Bone White `#F3F1EC` (near match) |
+| `surface-variant` | `#E2E3D9` | Footer body text and links | Mist Gray `#A9B0BD` |
+| `secondary-fixed-dim` | `#FFCC81` | Footer column headings, the newsletter heading, and the CTA kicker | Lamplight Brass `#D2AE6A` (**more saturated orange**) |
+| `primary-fixed-dim` | `#B9D7FD` | CTA panel lede | `#C6D0DC` (**bluer**) |
+| `secondary-fixed` at 40% | `#FFDDB0` | "Featured" badge fill | `#F2E8D5` |
+| Hard-coded `#151D2C`, `#111723`, `#0B0F19` | — | Portal mock window, sidebar and tiles | Night Panel family `#151D2E` / `#1A2336` / `#1F2940` (near) |
+| Tailwind defaults `emerald-600`, `emerald-300/800/950`, `red-500`, `amber-500` | — | Hero status dot, "Enrolled" badge, browser-window dots | Evergreen `#2E6A4E`, `#2B3650` window dots (**off-palette**) |
+
+**Tokens referenced but never defined (they render as nothing):** `surface-container-lowest`, `on-surface` and `primary-container`. Their visible effects are listed in §0.8.
+
+### 0.6 Verified layout, spacing and section order
+- **Container:** `max-w-[1320px]`, gutter 24px (`px-6`) below 1024px and 48px (`lg:px-12`) above. This matches the 1320px maximum. The gutter is fixed at two steps, not `clamp(20px,4vw,48px)`.
+- **Grid:** 12 columns with a 48–64px gap (`gap-12`/`lg:gap-16`), not 24–40px. Splits used: 7/5 (hero, announcements, news), 3/9 (about), 4/8 (programs), 6/6 (zig-zag), 5/7 (portal), 8/4 (campus).
+- **Vertical rhythm:** Sections use `py-24` (96px), stats `py-20` (80px), and the hero `pt-24 pb-20` (96/80px). This is fixed, not `clamp(72px,10vw,144px)`. Section header to content is `mb-12` (48px), inside the intended range. Kicker to heading is only 4–12px (`mb-1`–`mb-3`), against 18px intended.
+- **Header:** Measured 81px tall (80px plus a 1px border), not 76px.
+
+**Actual section order and bands:**
+
+| # | Section | Band | Composition | SITE.md §4.2 |
+|---|---|---|---|---|
+| 1 | Nav | Paper 95% + blur, sticky | Brand, 5 links, "Portal" text link, "Apply Now" | Differs (see §0.7) |
+| 2 | Hero | Paper | 7/5 split; ruled 4-up value props below | Matches the structure; copy differs |
+| 3 | About ("An education experience designed around people.") | Paper, top rule | 3/9 with a sticky kicker, 2 text columns, "Our story →" | Matches, but the statement is one colour, not half ink/half muted |
+| 4 | Announcements ("Institutional Dispatches") | White | 7/5: lead item + ruled list of **3** dated notices | 4 notices specified |
+| 5 | Programs ("Find your program") | Paper | 5 chips; 4/8 sticky image + advisory note beside a ruled index of 10 programs | Matches |
+| 6 | Student experience | White | 2-row zig-zag with a brass-dot list and a `[Metric]` pair | Matches |
+| 7 | Portal preview ("One portal for your whole school life.") | Night Ink | 5/7: role tabs as a horizontal pill group, browser-framed mock | Tabs are horizontal, not vertical; CTA is "Enter Student Portal" |
+| 8 | Campus highlights | Paper | 8/4 static image pair + ruled 5-row index with prev/next buttons | **Not a snap carousel** |
+| 9 | Stats ("Outcomes we measure") | White | 4-up ruled row, `[Metric]` in Harbor Navy | Matches |
+| 10 | News + video | Paper | 7/5 magazine grid, then a 21:9 video feature | Matches |
+| 11 | Events | White | Ruled 3-row agenda | Matches |
+| 12 | CTA ("Your next chapter starts here.") | Navy panel on Paper | Kicker, H2, lede, 2 buttons, concentric-ring graphic | **No 4 admission steps**; buttons are "Explore Academics"/"Student Portal", not "Apply now"/"Talk to admissions" |
+| 13 | Footer | Night Ink | Brand + italic tagline, newsletter, 4 link columns, bottom bar | Matches the structure |
+
+The band rhythm alternates Paper and White throughout, with one Night Ink band before the footer, as Section 5 requires. The hero and About are both Paper, separated only by a hairline.
+
+### 0.7 Verified components
+- **Navigation:** The monogram is a navy **8px-rounded square**, not a circle, and has no "College & Academy" subline. There are **5 links** (Academics, Institutes, Admissions, Campus, Research), not 7. The active link uses a 2px navy underline (not `aria-current`). On the right, "Portal" is a mono text link and "Apply Now" is a filled 44px navy button, so the roles are reversed from the intended ghost "Apply" plus primary "Student Portal". The bar is always opaque with a bottom border; it does not start transparent over the hero.
+- **Buttons:** Primary buttons are 48px tall (`h-12`) with 28px padding, 8px corners, Harbor Navy fill, white Geist 500 at 14px, and a mono "→". Hover changes colour only (to `#142C45`, 150ms): there is no shadow, lift or arrow glide. Ghost buttons use a `#DCD7CB` outline (1.31:1 on Paper). The hero pairs **two button-shaped links** (primary and ghost), where Section 4 asks for a primary button plus a text link. Text links are **mono uppercase** ("OUR STORY →", "READ MORE →") with no draw-in underline.
+- **Kickers:** Geist Mono, 12px, uppercase, `tracking-widest` (0.1em), Burnished Brass `#86601F`. **None has the 28px brass rule**; the hero kicker uses a 6px brass dot instead.
+- **Headings:** Fraunces weight 300 (`font-light`) everywhere. The H1 measures 48px (390px wide), 60px (820px) and 72px (1440px), with −0.025em tracking and one italic Harbor Navy emphasis word ("*Achievement.*"). That is smaller and lighter than the Display XL spec (up to 100px, weight 350). H2s range from 30px to 60px depending on the section.
+- **Body text:** Geist 16px (18px for the hero lede at 1024px and up). Many summaries, list descriptions and meta lines are **12px** (`text-xs`) and some mono labels are 10–11px, below the 16px body minimum in Section 8.
+- **Cards and radii:** Image frames and small cards are 8px (`rounded-lg`); the hero image, portal window and video feature are 12px (`rounded-xl`); the CTA panel is 16px (`rounded-2xl`). Section 4 asks for 8px and 14px. Resting shadows appear on the CTA panel (`shadow-xl`), portal window (`shadow-2xl`), hero inset photo (`shadow-lg`) and nav button (`shadow-sm`), against "no shadow at rest".
+- **Editorial lists:** Announcements, programs, campus facilities and events use hairline `#DCD7CB` dividers with a top and bottom rule, but **the top rule is Hairline Stone, not Midnight Ink**. Date blocks use a Fraunces `[DD]` over a brass mono `[Mon]`. Program rows use a brass mono code, a Fraunces 20px title, a 12px meta line and a 40px circular `north_east` arrow button that turns navy on hover. There is no −45° rotation or navy fill.
+- **Chips:** 34px tall pills, mono uppercase 12px. "All" is selected with a Harbor Navy fill (the spec uses an Ink fill). No `aria-pressed`.
+- **Badges:** "Featured" is a pill with a brass border at 40%, a `#FFDDB0` fill at 40% and Burnished Brass text (5.1:1). "Enrolled" uses Tailwind emerald colours.
+- **Portal preview:** A dark browser frame with coloured window dots, a URL bar, a sidebar with the active item at `primary/20`, two KPI tiles with `[—]`, an attendance strip and two session rows. Role tabs are a horizontal pill group with Student active in navy.
+- **Footer:** The tagline "Where Ambition Becomes Achievement." is italic Fraunces at 20px. The newsletter is a filled input and "Subscribe" button (not underline-only). Headings are `#FFCC81` mono, links are `#E2E3D9` Geist 14px, and the bottom bar is mono.
+- **Motion in the markup:** Colour transitions of 150–200ms. The announcement image zooms to 1.05 over 500ms. The video poster uses `scale-102`, which is not a Tailwind v3 class and does nothing. The hero status dot uses `animate-pulse`, and the play button scales to 1.1 on hover. There are no scroll reveals and no `prefers-reduced-motion` handling. `html` has `scroll-smooth`.
+
+### 0.8 Verified defects (visible in the Stitch screenshot or render)
+1. **Hero status note is see-through.** `bg-surface-container-lowest/95` is undefined, so the card has no fill. Over the grayscale library photo its text is barely readable.
+2. **CTA "Explore Academics" button is invisible.** It uses the undefined `bg-surface-container-lowest` with `text-primary` on the Harbor Navy panel, which works out to 1:1. The screenshot shows an empty gap where the button should be. Only the ghost "Student Portal" button is visible.
+3. **Footer email input is unreadable.** The forms plugin gives it a white fill, so the typed text (`#FFF8F2`) is 1.05:1 and the placeholder is about 1.2:1.
+4. **Featured news image rendering glitch.** In the Stitch screenshot the lead news image appears offset, with a blank strip and stray "Class — Home" text. The HTML is a normal `object-cover` image, so this is a Stitch asset or render artifact.
+5. **Hero photo is grayscale** (`grayscale contrast-[1.05]`), the only desaturated photo on the page.
+6. **Gradient scrim** on the video poster (`bg-gradient-to-t from-inverse-surface`). This is an image overlay, but Section 2 allows gradients only on image placeholders.
+7. **Invented or unverified facts in the copy**, which Section 9 forbids: "spanning 34 countries", "capped at 16 peers", "78% holding doctoral titles", "Active across 4 colleges", "Sixty years", "undefeated across six rounds", "Three clinical maternity centers", "© 2025". The copy also uses a heavy register ("matriculation", "monograph", "Institutional Dispatches") and invented program names ("Information Technology & Systems", "Tourism Management & Heritage", "Financial Management & Analytics"). MID is labelled "2-Year Associate" and CGV "Certificate Program", although SITE.md marks both `[confirm]`.
+
+### 0.9 Verified accessibility and responsive behaviour
+**Contrast (computed with WCAG 2.x):**
+
+| Pair | Ratio | Result |
+|---|---|---|
+| Ink `#151B28` on Paper | 15.67:1 | Pass |
+| Muted `#5A6272` on Paper / White | 5.58 / 6.13:1 | Pass |
+| Burnished Brass `#86601F` on Paper / White | 5.15 / 5.67:1 | Pass |
+| Harbor Navy `#1C3B5A` on Paper | 10.48:1 | Pass |
+| White on Harbor Navy | 11.52:1 | Pass |
+| `#FFF8F2` / Mist `#A9B0BD` / Lamplight `#D2AE6A` on Night Ink | 17.35 / 8.37 / 8.69:1 | Pass |
+| Footer links `#E2E3D9` / headings `#FFCC81` on Night Ink | 14.10 / 12.35:1 | Pass |
+| CTA kicker `#FFCC81` / lede `#B9D7FD` on Harbor Navy | 7.79 / 7.79:1 | Pass |
+| CTA "Explore Academics" (navy on navy) | 1.00:1 | **Fail** |
+| Footer input text / placeholder on white | 1.05 / ~1.2:1 | **Fail** |
+| Ghost-button and field outline `#DCD7CB` on Paper / White | 1.31 / 1.44:1 | **Fails the 3:1 non-text rule** (Section 4 asks for a Firm Stone or Slate Muted outline) |
+
+**Semantics and keyboard:**
+- **No image has an `alt` attribute.** All 13 content images carry their description in `data-alt` only.
+- There is no skip link, no `aria-current`, no `aria-label` on the `nav`, no `id` on `main`, and no `aria-labelledby` on sections. Only 3 elements have an `aria-label` (the two carousel buttons and the play button).
+- Heading levels skip from H1 straight to H4 in the hero value props, and H4 is used for list items throughout.
+- The chips, role tabs and program arrow buttons are `<button>`s with no `aria-pressed`, tab roles or accessible names. The arrow buttons contain only an icon glyph.
+- There are no focus styles beyond the browser default. The footer input removes its outline (`focus:outline-none`) and replaces it with only a brass border.
+
+**Responsive (from the local render):**
+- **390px:** The desktop link list is hidden (`hidden md:flex`) and **there is no menu button or drawer**, so below 768px the only navigation is "Portal" and "Apply Now". The brand wraps onto two lines and "Apply Now" wraps inside its button. The hero stacks as kicker, H1 (48px), lede, the two buttons (**not full width**) and then the main photo; the inset photo is hidden below 640px. The value props, the stats and the footer columns become 2 columns. The sticky program preview is hidden. The portal-mock sidebar is hidden (it does not become a tab strip). There is no horizontal page scroll: the CTA rings overflow but are clipped.
+- **820px:** Full desktop nav links appear from 768px (Section 5 says the drawer should be used up to 1099px). The hero and every split are still single-column (they split at 1024px).
+- **Touch targets:** Chips are 34px tall, below 44px. Hero and CTA buttons are 48px, nav "Apply Now" 44px, program arrows 40px and carousel buttons 40px.
+
+### 0.10 What the next baton prompt must add (from the verified drift)
+These do not change Sections 1–11. They restate the rules that the Home screen missed, so that later screens and any Home refinement follow them:
+- "Define every Tailwind colour token you use; do not reference `surface-container-lowest`, `on-surface` or `primary-container` unless they are defined." Or name the hex values directly.
+- "Every `<img>` needs a real `alt` attribute."
+- "Include a mobile menu button and full-screen drawer below 1100px."
+- "Nav: 7 links, a ghost 'Apply' and a primary 'Student Portal'. Kickers have a 28px brass rule, not a dot. Editorial lists start with a Midnight Ink `#151B28` rule."
+- "Use Lamplight Brass `#D2AE6A` for headings on dark and `#C6D0DC` for the CTA lede. Use no Tailwind default colours (emerald, red, amber)."
+- "Keep photos in colour, give no shadows at rest, and use radii of 8px and 14px only."
+- "Do not write facts or figures; use `[metric]` placeholders."
 
 ---
 
