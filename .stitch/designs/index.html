@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bruce Class — Home (Draft v0)</title>
+<!--
+  BRUCE CLASS — INITIAL HOME SCREEN (LOCAL DRAFT v0)
+  Hand-authored reference screen that encodes the design direction in
+  .stitch/DESIGN.md. It is NOT a Stitch export: no Stitch MCP server was
+  connected when the project was set up. Upload it with the
+  stitch-upload-to-stitch skill, or regenerate it in Stitch from the
+  baton in .stitch/next-prompt.md, when Stitch is connected.
+  All copy, dates and names are sample content. Every [metric] is a
+  placeholder for a real, verified number. Every .ph frame is an image
+  placeholder to be replaced with real Bruce Class photography.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Color — see DESIGN.md §2 */
+  --paper:#F6F4EF; --surface:#FFFFFF; --sunken:#EDEAE2;
+  --ink:#151B28; --ink-deep:#0F1522; --muted:#5A6272;
+  --border:#DCD7CB; --border-strong:#C9C2B3;
+  --primary:#1C3B5A; --primary-hover:#142C45;
+  --accent:#A87A2E; --accent-text:#86601F; --accent-on-dark:#D2AE6A;
+  --on-dark:#F3F1EC; --on-dark-muted:#A9B0BD; --line-dark:#27304A;
+  --success:#2E6A4E; --warning:#8F6410; --error:#A2382C;
+  --focus:#1C3B5A;
+
+  /* Type */
+  --f-display:"Fraunces",ui-serif,serif;
+  --f-sans:"Geist",ui-sans-serif,system-ui,sans-serif;
+  --f-mono:"Geist Mono",ui-monospace,monospace;
+
+  /* Layout */
+  --max:1320px; --gutter:clamp(20px,4vw,48px);
+  --section:clamp(72px,10vw,144px);
+  --r-sm:4px; --r-md:8px; --r-lg:14px;
+
+  /* Motion */
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --t-fast:160ms; --t-base:260ms; --t-slow:600ms;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.65 var(--f-sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3,h4{margin:0;font-weight:400}
+p{margin:0}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:16px;top:-60px;z-index:100;background:var(--ink);color:var(--on-dark);padding:10px 16px;border-radius:var(--r-md);text-decoration:none;transition:top var(--t-fast) var(--ease)}
+.skip:focus{top:12px}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:2px}
+.dark :focus-visible{outline-color:var(--accent-on-dark)}
+
+/* Type scale */
+.kicker{font:500 .75rem/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent-text);display:inline-flex;align-items:center;gap:12px}
+.kicker::before{content:"";width:28px;height:1px;background:currentColor}
+.dark .kicker{color:var(--accent-on-dark)}
+.display{font-family:var(--f-display);font-variation-settings:"opsz" 144;font-weight:350;font-size:clamp(2.75rem,7.2vw,6.25rem);line-height:.98;letter-spacing:-.025em}
+.display em{font-style:italic;font-weight:300;color:var(--primary)}
+.h2{font-family:var(--f-display);font-variation-settings:"opsz" 96;font-weight:380;font-size:clamp(2rem,4.2vw,3.5rem);line-height:1.05;letter-spacing:-.02em}
+.h3{font-family:var(--f-display);font-weight:420;font-size:clamp(1.375rem,2vw,1.75rem);line-height:1.2;letter-spacing:-.01em}
+.lede{font-size:clamp(1.0625rem,1.4vw,1.25rem);line-height:1.6;color:var(--muted);max-width:56ch}
+.meta{font:400 .8125rem/1.4 var(--f-mono);color:var(--muted);letter-spacing:.02em}
+
+/* Buttons */
+.btn{--bg:var(--primary);display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 22px;border-radius:var(--r-md);background:var(--bg);color:#fff;font:500 .9375rem/1 var(--f-sans);text-decoration:none;border:1px solid transparent;cursor:pointer;transition:background var(--t-base) var(--ease),transform var(--t-fast) var(--ease),box-shadow var(--t-base) var(--ease)}
+.btn:hover{--bg:var(--primary-hover);box-shadow:0 6px 18px -8px rgba(20,44,69,.55)}
+.btn:active{transform:translateY(1px)}
+.btn .arr{transition:transform var(--t-base) var(--ease-out)}
+.btn:hover .arr,.link:hover .arr{transform:translateX(4px)}
+.btn-ghost{--bg:transparent;color:var(--ink);border-color:var(--border-strong)}
+.btn-ghost:hover{--bg:var(--surface);box-shadow:none;border-color:var(--ink)}
+.dark .btn-ghost{color:var(--on-dark);border-color:var(--line-dark)}
+.dark .btn-ghost:hover{--bg:rgba(255,255,255,.04);border-color:var(--on-dark-muted)}
+.btn-light{--bg:var(--on-dark);color:var(--ink-deep)}
+.btn-light:hover{--bg:#fff}
+.link{display:inline-flex;align-items:center;gap:8px;font-weight:500;text-decoration:none;color:var(--primary);background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;padding-bottom:2px;transition:background-size var(--t-base) var(--ease)}
+.link:hover{background-size:100% 1px}
+.dark .link{color:var(--on-dark)}
+
+/* Image placeholders */
+.ph{position:relative;overflow:hidden;background:
+  radial-gradient(120% 90% at 20% 10%,rgba(255,255,255,.35),transparent 60%),
+  linear-gradient(160deg,#C9C2B3 0%,#A9AEB5 55%,#7E8896 100%);border-radius:var(--r-md)}
+.ph.warm{background:radial-gradient(110% 80% at 80% 0%,rgba(255,255,255,.3),transparent 55%),linear-gradient(165deg,#D8CBB0,#B59A6B 60%,#8A7250)}
+.ph.cool{background:radial-gradient(110% 80% at 10% 0%,rgba(255,255,255,.25),transparent 55%),linear-gradient(170deg,#9FB0C2,#5E7690 60%,#2F4660)}
+.ph.deep{background:radial-gradient(100% 70% at 30% 20%,rgba(255,255,255,.12),transparent 60%),linear-gradient(170deg,#3A4A63,#1E2A40 70%,#141C2D)}
+.ph::after{content:attr(data-label);position:absolute;left:14px;bottom:12px;right:14px;font:500 .6875rem/1.3 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.9);text-shadow:0 1px 2px rgba(0,0,0,.25)}
+.ph .grain{position:absolute;inset:0;opacity:.18;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.zoom{overflow:hidden;border-radius:var(--r-md)}
+.zoom .ph{transition:transform 900ms var(--ease-out)}
+a:hover .zoom .ph,.zoom:hover .ph{transform:scale(1.04)}
+
+/* ---------- NAV ---------- */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:background var(--t-base) var(--ease),border-color var(--t-base) var(--ease),backdrop-filter var(--t-base)}
+.nav-in{display:flex;align-items:center;gap:32px;height:76px}
+.nav.scrolled{background:rgba(246,244,239,.86);backdrop-filter:saturate(1.2) blur(14px);-webkit-backdrop-filter:saturate(1.2) blur(14px);border-bottom:1px solid var(--border)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;margin-right:auto}
+.seal{width:36px;height:36px;border-radius:50%;border:1px solid var(--ink);display:grid;place-items:center;font:500 .9375rem/1 var(--f-display);font-style:italic}
+.brand b{font:500 1.0625rem/1 var(--f-sans);letter-spacing:-.01em;display:block}
+.brand small{font:400 .6875rem/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-top:5px}
+.menu{display:flex;gap:4px;list-style:none;margin:0;padding:0}
+.menu a{display:block;padding:10px 12px;font:500 .875rem/1 var(--f-sans);text-decoration:none;color:var(--ink);border-radius:var(--r-sm);position:relative}
+.menu a::after{content:"";position:absolute;left:12px;right:12px;bottom:4px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform var(--t-base) var(--ease-out)}
+.menu a:hover::after,.menu a[aria-current]::after{transform:scaleX(1)}
+.nav-cta{display:flex;align-items:center;gap:10px}
+.nav-cta .btn{min-height:42px;padding:0 18px;font-size:.875rem}
+.burger{display:none;width:44px;height:44px;border:1px solid var(--border-strong);border-radius:var(--r-md);background:transparent;cursor:pointer;position:relative}
+.burger span{position:absolute;left:12px;right:12px;height:1.5px;background:var(--ink);transition:transform var(--t-base) var(--ease),opacity var(--t-fast)}
+.burger span:nth-child(1){top:17px}.burger span:nth-child(2){top:25px}
+.burger[aria-expanded=true] span:nth-child(1){transform:translateY(4px) rotate(45deg)}
+.burger[aria-expanded=true] span:nth-child(2){transform:translateY(-4px) rotate(-45deg)}
+.drawer{position:fixed;inset:0;z-index:45;background:var(--paper);padding:110px var(--gutter) 32px;display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity var(--t-base) var(--ease),transform var(--t-base) var(--ease),visibility 0s linear var(--t-base)}
+.drawer.open{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.drawer ol{list-style:none;margin:0;padding:0;counter-reset:d}
+.drawer li{border-bottom:1px solid var(--border);counter-increment:d}
+.drawer li a{display:flex;align-items:baseline;gap:16px;padding:16px 0;font:380 1.875rem/1.1 var(--f-display);text-decoration:none}
+.drawer li a::before{content:counter(d,decimal-leading-zero);font:400 .75rem/1 var(--f-mono);color:var(--muted)}
+.drawer .btn{margin-top:auto;justify-content:center}
+
+/* ---------- HERO ---------- */
+.hero{padding:clamp(120px,16vw,176px) 0 var(--section);position:relative}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(32px,5vw,80px);align-items:end}
+.hero .kicker{margin-bottom:28px}
+.hero .lede{margin-top:28px}
+.hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:24px;margin-top:40px}
+.hero-art{position:relative;display:grid;grid-template-columns:1fr .62fr;grid-template-rows:auto auto;gap:14px}
+.hero-art .main{grid-row:1/3;aspect-ratio:4/5.2}
+.hero-art .side{aspect-ratio:1/1.05}
+.hero-art .note{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:18px;display:flex;flex-direction:column;justify-content:space-between;gap:18px}
+.note .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--success);margin-right:8px;box-shadow:0 0 0 0 rgba(46,106,78,.45);animation:pulse 2.4s var(--ease) infinite}
+.note b{font:420 1.25rem/1.2 var(--f-display);display:block}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(46,106,78,.45)}70%{box-shadow:0 0 0 8px rgba(46,106,78,0)}100%{box-shadow:0 0 0 0 rgba(46,106,78,0)}}
+.hero-foot{margin-top:clamp(56px,7vw,96px);padding-top:22px;border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.hero-foot div{font-size:.875rem;color:var(--muted)}
+.hero-foot b{display:block;font:500 .9375rem/1.3 var(--f-sans);color:var(--ink);margin-bottom:4px}
+
+/* ---------- INTRO ---------- */
+.intro{padding:0 0 var(--section)}
+.intro-grid{display:grid;grid-template-columns:3fr 9fr;gap:clamp(24px,4vw,64px);align-items:start}
+.intro-grid>.kicker{margin-top:14px}
+.intro .statement{font:340 clamp(1.625rem,3.2vw,2.625rem)/1.22 var(--f-display);letter-spacing:-.015em;max-width:30ch}
+.intro .statement span{color:var(--muted)}
+.intro-cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px);margin-top:48px;max-width:860px}
+.intro-cols p{color:var(--muted)}
+
+/* ---------- ANNOUNCEMENTS ---------- */
+.sec{padding:var(--section) 0}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:32px;margin-bottom:clamp(40px,5vw,64px)}
+.sec-head .kicker{margin-bottom:18px}
+.alt{background:var(--surface);border-block:1px solid var(--border)}
+.ann{display:grid;grid-template-columns:1.35fr 1fr;gap:clamp(24px,4vw,56px)}
+.lead a{text-decoration:none;display:block}
+.lead .zoom .ph{aspect-ratio:16/10}
+.lead .cat{margin-top:24px}
+.lead h3{margin-top:12px;font:380 clamp(1.625rem,2.6vw,2.25rem)/1.12 var(--f-display);letter-spacing:-.015em}
+.lead p{margin-top:14px;color:var(--muted);max-width:58ch}
+.notices{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.notices li{border-bottom:1px solid var(--border)}
+.notices a{display:grid;grid-template-columns:72px 1fr auto;gap:18px;align-items:start;padding:22px 0;text-decoration:none;transition:padding var(--t-base) var(--ease)}
+.notices a:hover{padding-left:8px}
+.notices time{font:500 .75rem/1.35 var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.notices time b{display:block;font:380 1.75rem/1 var(--f-display);color:var(--ink);letter-spacing:-.01em;margin-bottom:4px}
+.notices h4{font:500 1.0625rem/1.35 var(--f-sans)}
+.notices p{font-size:.9375rem;color:var(--muted);margin-top:6px}
+.notices .arr{opacity:0;transform:translateX(-6px);transition:all var(--t-base) var(--ease-out);margin-top:4px}
+.notices a:hover .arr{opacity:1;transform:none}
+.badge{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;font:500 .6875rem/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--border-strong);color:var(--muted)}
+.badge.hot{border-color:transparent;background:#F2E8D5;color:var(--accent-text)}
+
+/* ---------- PROGRAMS ---------- */
+.prog-layout{display:grid;grid-template-columns:1fr 1.35fr;gap:clamp(32px,5vw,80px);align-items:start}
+.prog-preview{position:sticky;top:112px}
+.prog-preview .ph{aspect-ratio:4/5;transition:opacity var(--t-slow) var(--ease)}
+.prog-preview .cap{margin-top:18px;display:flex;justify-content:space-between;gap:16px}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.chip{min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--border-strong);background:transparent;font:500 .8125rem/1 var(--f-sans);color:var(--ink);cursor:pointer;transition:all var(--t-fast) var(--ease)}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--on-dark);border-color:var(--ink)}
+.prog-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.prog-list li{border-bottom:1px solid var(--border)}
+.prog-list li[hidden]{display:none}
+.prog-list a{display:grid;grid-template-columns:64px 1fr auto;gap:20px;align-items:center;padding:22px 0;text-decoration:none;position:relative}
+.prog-list a::before{content:"";position:absolute;inset:0 -16px;background:var(--sunken);border-radius:var(--r-md);opacity:0;transition:opacity var(--t-base) var(--ease);z-index:-1}
+.prog-list a:hover::before,.prog-list a:focus-visible::before{opacity:1}
+.prog-list .code{font:500 .75rem/1 var(--f-mono);color:var(--muted);letter-spacing:.06em}
+.prog-list h3{font:400 clamp(1.25rem,1.9vw,1.625rem)/1.2 var(--f-display);letter-spacing:-.01em}
+.prog-list .deg{display:block;font:400 .875rem/1.4 var(--f-sans);color:var(--muted);margin-top:4px}
+.prog-list .go{width:40px;height:40px;border-radius:50%;border:1px solid var(--border-strong);display:grid;place-items:center;transition:all var(--t-base) var(--ease-out)}
+.prog-list a:hover .go{background:var(--primary);border-color:var(--primary);color:#fff;transform:rotate(-45deg)}
+.prog-list li{position:relative;z-index:0}
+
+/* ---------- EXPERIENCE (zig-zag) ---------- */
+.exp-row{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(32px,6vw,96px);align-items:center}
+.exp-row+.exp-row{margin-top:clamp(64px,8vw,120px)}
+.exp-row.flip .exp-media{order:2}
+.exp-media .ph{aspect-ratio:5/4}
+.exp-row.flip .exp-media .ph{aspect-ratio:4/5;max-width:440px;margin-left:auto}
+.exp-copy .h3{margin:18px 0 16px;font-size:clamp(1.75rem,3vw,2.5rem);line-height:1.1}
+.exp-copy p{color:var(--muted);max-width:48ch}
+.exp-copy ul{list-style:none;padding:0;margin:28px 0 0;border-top:1px solid var(--border)}
+.exp-copy li{padding:14px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:16px;font-size:.9375rem}
+.exp-copy li span{color:var(--muted);font:400 .8125rem/1.6 var(--f-mono)}
+
+/* ---------- DIGITAL CAMPUS (dark) ---------- */
+.dark{background:var(--ink-deep);color:var(--on-dark)}
+.dark .lede,.dark .meta{color:var(--on-dark-muted)}
+.dc-grid{display:grid;grid-template-columns:1fr 1.45fr;gap:clamp(32px,6vw,96px);align-items:center}
+.roles{list-style:none;margin:36px 0 0;padding:0;border-top:1px solid var(--line-dark)}
+.roles button{all:unset;box-sizing:border-box;width:100%;display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid var(--line-dark);cursor:pointer;font:500 1rem/1.3 var(--f-sans);color:var(--on-dark-muted);transition:color var(--t-fast) var(--ease)}
+.roles button:hover,.roles button[aria-selected=true]{color:var(--on-dark)}
+.roles button[aria-selected=true] .meta{color:var(--accent-on-dark)}
+.roles button:focus-visible{outline:2px solid var(--accent-on-dark);outline-offset:4px}
+.mock{background:#151D2E;border:1px solid var(--line-dark);border-radius:var(--r-lg);overflow:hidden;box-shadow:0 40px 80px -40px rgba(0,0,0,.6)}
+.mock-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line-dark)}
+.mock-bar i{width:9px;height:9px;border-radius:50%;background:#2B3650}
+.mock-bar span{margin-left:12px;font:400 .75rem/1 var(--f-mono);color:var(--on-dark-muted)}
+.mock-body{display:grid;grid-template-columns:168px 1fr;min-height:380px}
+.mock-side{border-right:1px solid var(--line-dark);padding:18px 12px;display:flex;flex-direction:column;gap:4px}
+.mock-side div{padding:9px 10px;border-radius:6px;font:500 .8125rem/1 var(--f-sans);color:var(--on-dark-muted)}
+.mock-side .on{background:#1F2940;color:var(--on-dark)}
+.mock-main{padding:22px;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:min-content;gap:14px}
+.tile{background:#1A2336;border:1px solid var(--line-dark);border-radius:10px;padding:16px}
+.tile .meta{font-size:.6875rem;text-transform:uppercase;letter-spacing:.1em}
+.tile b{display:block;margin-top:10px;font:400 1.5rem/1 var(--f-display);color:var(--on-dark)}
+.tile.wide{grid-column:1/-1}
+.sched{list-style:none;margin:12px 0 0;padding:0}
+.sched li{display:grid;grid-template-columns:70px 1fr auto;gap:12px;padding:10px 0;border-top:1px solid var(--line-dark);font-size:.8125rem;color:var(--on-dark)}
+.sched li span{font-family:var(--f-mono);color:var(--on-dark-muted)}
+.skel{height:8px;border-radius:4px;background:linear-gradient(90deg,#1F2940 0%,#2A3552 50%,#1F2940 100%);background-size:200% 100%;animation:shimmer 2.2s linear infinite;margin-top:10px}
+@keyframes shimmer{to{background-position:-200% 0}}
+.mock-view{transition:opacity var(--t-base) var(--ease)}
+.mock-view.fading{opacity:0}
+
+/* ---------- HIGHLIGHTS (horizontal) ---------- */
+.hl-track{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(280px,30%);gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;--edge:max(var(--gutter),calc((100vw - var(--max)) / 2 + var(--gutter)));padding:0 var(--edge) 24px;scroll-padding-inline:var(--edge);scrollbar-width:thin;scrollbar-color:var(--border-strong) transparent}
+.hl-track>*{scroll-snap-align:start}
+.hl-track article:nth-child(even) .ph{aspect-ratio:4/5}
+.hl-track article .ph{aspect-ratio:4/4.4}
+.hl-track h3{font:420 1.25rem/1.25 var(--f-display);margin-top:16px}
+.hl-track p{color:var(--muted);font-size:.9375rem;margin-top:6px}
+.hl-controls{display:flex;gap:8px}
+.icon-btn{width:48px;height:48px;border-radius:50%;border:1px solid var(--border-strong);background:transparent;display:grid;place-items:center;cursor:pointer;color:var(--ink);transition:all var(--t-fast) var(--ease)}
+.icon-btn:hover{background:var(--ink);color:var(--on-dark);border-color:var(--ink)}
+
+/* ---------- STATS ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink)}
+.stats div{padding:28px 24px 8px 0}
+.stats div+div{padding-left:24px;border-left:1px solid var(--border)}
+.stats b{display:block;font:340 clamp(2.5rem,4.5vw,4rem)/1 var(--f-display);letter-spacing:-.02em}
+.stats b.ph-num{color:var(--border-strong)}
+.stats span{display:block;margin-top:14px;color:var(--muted);font-size:.9375rem;max-width:22ch}
+
+/* ---------- NEWSROOM ---------- */
+.news{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(20px,3vw,40px)}
+.news a{text-decoration:none;display:block}
+.news .feature{grid-column:span 7}
+.news .feature .ph{aspect-ratio:16/10}
+.news .stack{grid-column:span 5;display:grid;gap:28px;align-content:start}
+.news .stack a{display:grid;grid-template-columns:140px 1fr;gap:18px}
+.news .stack .ph{aspect-ratio:1/1}
+.news h3{font:400 1.25rem/1.25 var(--f-display);letter-spacing:-.01em;margin-top:10px}
+.news .feature h3{font-size:clamp(1.625rem,2.6vw,2.25rem);line-height:1.12;margin-top:18px}
+.news .feature p{color:var(--muted);margin-top:12px;max-width:60ch}
+.video{grid-column:1/-1;display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(24px,4vw,56px);align-items:center;margin-top:clamp(24px,3vw,40px);padding-top:clamp(32px,4vw,56px);border-top:1px solid var(--border)}
+.video .ph{aspect-ratio:16/9}
+.play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:76px;height:76px;border-radius:50%;background:rgba(246,244,239,.92);display:grid;place-items:center;color:var(--ink);transition:transform var(--t-base) var(--ease-out);border:0;cursor:pointer}
+.video a:hover .play{transform:translate(-50%,-50%) scale(1.08)}
+
+/* ---------- EVENTS ---------- */
+.events{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.events li{border-bottom:1px solid var(--border)}
+.events a{display:grid;grid-template-columns:120px 1fr 200px 48px;gap:24px;align-items:center;padding:26px 0;text-decoration:none;transition:background var(--t-base) var(--ease)}
+.events a:hover{background:linear-gradient(90deg,transparent,var(--surface) 12%,var(--surface) 88%,transparent)}
+.events .d{font:340 2.5rem/1 var(--f-display);letter-spacing:-.02em}
+.events .d small{display:block;font:500 .75rem/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+.events h3{font:400 1.375rem/1.25 var(--f-display)}
+.events p{color:var(--muted);font-size:.9375rem;margin-top:4px}
+.events .where{font:400 .8125rem/1.5 var(--f-mono);color:var(--muted)}
+
+/* ---------- CTA ---------- */
+.cta{padding:var(--section) 0}
+.cta-box{display:grid;grid-template-columns:1.3fr 1fr;gap:clamp(32px,5vw,80px);align-items:end;padding:clamp(40px,6vw,88px);border-radius:var(--r-lg);background:var(--primary);color:var(--on-dark);position:relative;overflow:hidden}
+.cta-box::before{content:"";position:absolute;right:-12%;top:-40%;width:60%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(255,255,255,.12)}
+.cta-box::after{content:"";position:absolute;right:-4%;top:-20%;width:40%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(255,255,255,.08)}
+.cta-box .h2{max-width:14ch}
+.cta-box .lede{color:#C6D0DC}
+.cta-steps{list-style:none;margin:0 0 32px;padding:0;counter-reset:s;position:relative;z-index:1}
+.cta-steps li{counter-increment:s;display:flex;gap:16px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.14);font-size:.9375rem}
+.cta-steps li::before{content:counter(s,decimal-leading-zero);font:400 .75rem/1.9 var(--f-mono);color:var(--accent-on-dark)}
+.cta-box .actions{display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:1}
+.cta-box .btn-ghost{color:var(--on-dark);border-color:rgba(255,255,255,.3)}
+.cta-box .btn-ghost:hover{--bg:rgba(255,255,255,.06);border-color:#fff}
+
+/* ---------- FOOTER ---------- */
+.foot{padding:clamp(64px,8vw,112px) 0 32px}
+.foot-top{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:clamp(24px,4vw,56px);padding-bottom:56px;border-bottom:1px solid var(--line-dark)}
+.foot .big{font:340 clamp(1.75rem,3vw,2.5rem)/1.15 var(--f-display);letter-spacing:-.015em;max-width:16ch}
+.foot h4{font:500 .75rem/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent-on-dark);margin-bottom:18px}
+.foot ul{list-style:none;margin:0;padding:0}
+.foot li a{display:inline-block;padding:7px 0;text-decoration:none;color:var(--on-dark-muted);font-size:.9375rem;transition:color var(--t-fast) var(--ease)}
+.foot li a:hover{color:var(--on-dark)}
+.news-form{display:flex;margin-top:28px;max-width:420px;border-bottom:1px solid var(--on-dark-muted)}
+.news-form input{flex:1;min-height:48px;background:transparent;border:0;color:var(--on-dark);font:400 1rem var(--f-sans);padding:0}
+.news-form input::placeholder{color:#8891A0}
+.news-form input:focus{outline:none}
+.news-form:focus-within{border-color:var(--accent-on-dark)}
+.news-form button{background:transparent;border:0;color:var(--on-dark);font:500 .875rem var(--f-sans);cursor:pointer;min-height:48px;padding:0 4px}
+.foot-bot{display:flex;justify-content:space-between;gap:24px;padding-top:28px;flex-wrap:wrap}
+.foot-bot .meta{color:#8891A0}
+
+/* ---------- REVEAL ---------- */
+.rv{opacity:0;transform:translateY(24px);transition:opacity 800ms var(--ease-out),transform 800ms var(--ease-out);transition-delay:calc(var(--i,0) * 80ms)}
+.rv.in{opacity:1;transform:none}
+.no-js .rv{opacity:1;transform:none}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:1100px){
+  .menu{display:none}
+  .burger{display:block}
+  .nav-cta .btn-ghost{display:none}
+  .hero-grid,.ann,.prog-layout,.dc-grid,.cta-box{grid-template-columns:1fr}
+  .prog-preview{display:none}
+  .news .feature,.news .stack{grid-column:1/-1}
+  .events a{grid-template-columns:96px 1fr 48px}
+  .events .where{display:none}
+}
+@media (max-width:767px){
+  body{font-size:1rem}
+  .nav-cta .btn{display:none}
+  .hero{padding-top:112px}
+  .hero-art{grid-template-columns:1fr 1fr}
+  .hero-art .main{grid-row:auto;grid-column:1/-1;aspect-ratio:4/3.4}
+  .hero-foot{grid-template-columns:1fr 1fr;row-gap:20px}
+  .hero-actions .btn{width:100%;justify-content:center}
+  .intro-grid,.intro-cols,.exp-row{grid-template-columns:1fr}
+  .exp-row.flip .exp-media{order:0}
+  .exp-row.flip .exp-media .ph{max-width:none;aspect-ratio:5/4}
+  .sec-head{flex-direction:column;align-items:flex-start}
+  .mock-body{grid-template-columns:1fr}
+  .mock-side{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line-dark)}
+  .mock-side div{white-space:nowrap}
+  .mock-main{grid-template-columns:1fr}
+  .hl-track{grid-auto-columns:82%}
+  .stats{grid-template-columns:1fr 1fr}
+  .stats div:nth-child(3){padding-left:0;border-left:0}
+  .stats div:nth-child(n+3){border-top:1px solid var(--border)}
+  .news .stack a{grid-template-columns:104px 1fr}
+  .video{grid-template-columns:1fr}
+  .events a{grid-template-columns:72px 1fr}
+  .events a>svg{display:none}
+  .events .d{font-size:2rem}
+  .foot-top{grid-template-columns:1fr 1fr}
+  .foot-top>div:first-child{grid-column:1/-1}
+  .notices a{grid-template-columns:60px 1fr}
+  .notices .arr{display:none}
+  .roles .meta{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body class="no-js">
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- 1. NAVIGATION -->
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="Bruce Class home">
+      <span class="seal" aria-hidden="true">B</span>
+      <span><b>Bruce Class</b><small>College &amp; Academy</small></span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="menu">
+        <li><a href="#top" aria-current="page">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#programs">Academics</a></li>
+        <li><a href="#admissions">Admissions</a></li>
+        <li><a href="#experience">Campus Life</a></li>
+        <li><a href="#announcements">Announcements</a></li>
+        <li><a href="#events">Events</a></li>
+      </ul>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="#admissions">Apply</a>
+      <a class="btn" href="#portal">Student Portal</a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="drawer" aria-label="Open menu"><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer" id="drawer" aria-label="Menu">
+  <ol>
+    <li><a href="#top">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#programs">Academics</a></li>
+    <li><a href="#admissions">Admissions</a></li>
+    <li><a href="#experience">Campus Life</a></li>
+    <li><a href="#announcements">Announcements</a></li>
+    <li><a href="#events">Events</a></li>
+  </ol>
+  <a class="btn" href="#portal">Sign in to Student Portal</a>
+</div>
+
+<main id="main">
+
+<!-- 2. HERO -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="kicker rv">Admissions for S.Y. 2027–2028 are open</p>
+        <h1 class="display rv" style="--i:1">Where ambition becomes <em>achievement.</em></h1>
+        <p class="lede rv" style="--i:2">Bruce Class brings rigorous academics, dedicated faculty and a connected digital campus together, so every student has a clear path from their first class to their chosen career.</p>
+        <div class="hero-actions rv" style="--i:3">
+          <a class="btn" href="#admissions">Start your application <span class="arr" aria-hidden="true">&rarr;</span></a>
+          <a class="link" href="#programs">Explore programs <span class="arr" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
+      <div class="hero-art rv" style="--i:2">
+        <div class="ph main cool" data-label="Photo — Students in the main library, natural light" role="img" aria-label="Placeholder: students studying in the library"><span class="grain"></span></div>
+        <div class="ph side warm" data-label="Photo — Faculty mentoring" role="img" aria-label="Placeholder: faculty member mentoring a student"><span class="grain"></span></div>
+        <div class="note">
+          <p class="meta"><span class="dot" aria-hidden="true"></span>Enrollment open</p>
+          <div><b>First-year application deadline</b><p class="meta" style="margin-top:6px">[Date to confirm]</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-foot rv" style="--i:4">
+      <div><b>10 programs</b>Degree, diploma and certificate tracks</div>
+      <div><b>Digital campus</b>Grades, schedules and payments online</div>
+      <div><b>Guided admissions</b>One clear path from inquiry to enrollment</div>
+      <div><b>Community</b>Faculty who know every student by name</div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. INTRODUCTION -->
+<section class="intro" id="about">
+  <div class="wrap intro-grid">
+    <p class="kicker rv">About Bruce Class</p>
+    <div>
+      <p class="statement rv">An institution built on high standards and close mentorship. <span>We prepare graduates who can think clearly, work with integrity and lead in their communities.</span></p>
+      <div class="intro-cols">
+        <p class="rv" style="--i:1">From information technology and education to business, tourism and allied health, our programs pair academic depth with the practical experience employers look for.</p>
+        <p class="rv" style="--i:2">Every student, parent and teacher shares one digital campus, so grades, schedules, announcements and payments are always a click away.<br><br><a class="link" href="#about">Our story <span class="arr" aria-hidden="true">&rarr;</span></a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. FEATURED ANNOUNCEMENTS -->
+<section class="sec alt" id="announcements" aria-labelledby="ann-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Announcements</p><h2 class="h2" id="ann-h">What's happening now</h2></div>
+      <a class="link" href="#announcements">All announcements <span class="arr" aria-hidden="true">&rarr;</span></a>
+    </div>
+    <div class="ann">
+      <article class="lead rv">
+        <a href="#announcements">
+          <div class="zoom"><div class="ph warm" data-label="Photo — Enrollment help desk, featured announcement" role="img" aria-label="Placeholder: enrollment help desk"><span class="grain"></span></div></div>
+          <p class="cat"><span class="badge hot">Featured</span> <span class="meta" style="margin-left:10px">Admissions · [Date]</span></p>
+          <h3>Enrollment for the new school year opens with a simpler online process</h3>
+          <p>Applicants can now choose a program, submit requirements and track their status from one place. Our admissions team is available on campus for anyone who prefers to apply in person.</p>
+        </a>
+      </article>
+      <ul class="notices">
+        <li class="rv" style="--i:1"><a href="#announcements"><time><b>[DD]</b>[Mon]</time><div><h4>Entrance examination schedule released</h4><p>Check your testing room and bring a valid ID.</p></div><span class="arr" aria-hidden="true">&rarr;</span></a></li>
+        <li class="rv" style="--i:2"><a href="#announcements"><time><b>[DD]</b>[Mon]</time><div><h4>Cashier office extends hours during enrollment week</h4><p>Payments are also accepted through the student portal.</p></div><span class="arr" aria-hidden="true">&rarr;</span></a></li>
+        <li class="rv" style="--i:3"><a href="#announcements"><time><b>[DD]</b>[Mon]</time><div><h4>Scholarship applications now accepted</h4><p>Academic and financial-need grants for incoming students.</p></div><span class="arr" aria-hidden="true">&rarr;</span></a></li>
+        <li class="rv" style="--i:4"><a href="#announcements"><time><b>[DD]</b>[Mon]</time><div><h4>Registrar document requests move online</h4><p>Request transcripts and certificates from your portal.</p></div><span class="arr" aria-hidden="true">&rarr;</span></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 5. ACADEMIC PROGRAMS -->
+<section class="sec" id="programs" aria-labelledby="prog-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Academic programs</p><h2 class="h2" id="prog-h">Find the program that fits your future</h2></div>
+      <p class="lede" style="max-width:40ch">Ten programs across five disciplines, each with a clear curriculum and career path.</p>
+    </div>
+    <div class="prog-layout">
+      <div class="prog-preview" aria-hidden="true">
+        <div class="ph cool" id="progImg" data-label="Photo — Computer laboratory"><span class="grain"></span></div>
+        <div class="cap"><span class="meta" id="progCap">Information Technology</span><span class="meta">Hover a program</span></div>
+      </div>
+      <div>
+        <div class="filters" role="group" aria-label="Filter programs">
+          <button class="chip" aria-pressed="true" data-f="all">All</button>
+          <button class="chip" aria-pressed="false" data-f="tech">Technology</button>
+          <button class="chip" aria-pressed="false" data-f="edu">Education</button>
+          <button class="chip" aria-pressed="false" data-f="biz">Business &amp; Tourism</button>
+          <button class="chip" aria-pressed="false" data-f="health">Health</button>
+        </div>
+        <ul class="prog-list" id="progList">
+          <li data-c="tech" data-img="cool" data-cap="Information Technology"><a href="#programs"><span class="code">BSIT</span><div><h3>Information Technology</h3><span class="deg">Bachelor of Science · 4 years</span></div><span class="go" aria-hidden="true">&rarr;</span></a></li>
+          <li data-c="edu" data-img="warm" data-cap="Secondary Education"><a href="#programs"><span class="code">BSED</span><div><h3>Secondary Education — Mathematics</h3><span class="deg">Bachelor of Secondary Education · 4 years</span></div><span class="go" aria-hidden="true">&rarr;</span></a></li>
+          <li data-c="edu" data-img="warm" data-cap="Secondary Education"><a href="#programs"><span class="code">BSED</span><div><h3>Secondary Education — Filipino</h3><span class="deg">Bachelor of Secondary Education · 4 years</span></div><span class="go" aria-hidden="true">&rarr;</span></a></li>
+          <li data-c="edu" data-img="warm" data-cap="Secondary Education"><a href="#programs"><span class="code">BSED</span><div><h3>Secondary Education — English</h3><span class="deg">Bachelor of Secondary Education · 4 years</span></div><span class="go" aria-hidden="true">&rarr;</span></a></li>
+          <li data-c="edu" data-img="warm" data-cap="Elementary Education"><a href="#programs"><span class="code">BEED</span><div><h3>Elementary Education</h3><span class="deg">Bachelor of Elementary Education · 4 years</span></div><span class="go" aria-hidden="true">&rarr;</span></a></li>
+          <li data-c="biz" data-img="" data-cap="Tourism Management"><a href="#programs"><span class="code">BSTM</span><div><h3>Tourism Management</h3><span class="deg">Bachelor of Science · 4 years</span></div><span class="go" aria-hidden="true">&rarr;</span></a></li>
+          <li data-c="biz" data-img="" data-cap="Business Administration"><a href="#programs"><span class="code">BSBA</span><div><h3>Business Administration — Financial Management</h3><span class="deg">Bachelor of Science · 4 years</span></div><span class="go" aria-hidden="true">&rarr;</span></a></li>
+          <li data-c="biz" data-img="" data-cap="Business Administration"><a href="#programs"><span class="code">BSBA</span><div><h3>Business Administration — Marketing Management</h3><span class="deg">Bachelor of Science · 4 years</span></div><span class="go" aria-hidden="true">&rarr;</span></a></li>
+          <li data-c="health" data-img="deep" data-cap="Midwifery"><a href="#programs"><span class="code">MID</span><div><h3>Midwifery</h3><span class="deg">[Degree type and duration to confirm]</span></div><span class="go" aria-hidden="true">&rarr;</span></a></li>
+          <li data-c="health" data-img="deep" data-cap="Caregiving"><a href="#programs"><span class="code">CGV</span><div><h3>Caregiving</h3><span class="deg">[Certificate track and duration to confirm]</span></div><span class="go" aria-hidden="true">&rarr;</span></a></li>
+        </ul>
+        <p style="margin-top:28px"><a class="link" href="#programs">Compare all programs <span class="arr" aria-hidden="true">&rarr;</span></a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. STUDENT EXPERIENCE -->
+<section class="sec alt" id="experience" aria-labelledby="exp-h">
+  <div class="wrap">
+    <div class="sec-head"><div><p class="kicker">Student experience</p><h2 class="h2" id="exp-h">Life at Bruce Class</h2></div></div>
+    <div class="exp-row">
+      <div class="exp-media rv"><div class="ph warm" data-label="Photo — Small-group seminar in a classroom" role="img" aria-label="Placeholder: seminar in a classroom"><span class="grain"></span></div></div>
+      <div class="exp-copy rv" style="--i:1">
+        <p class="kicker">Learning</p>
+        <h3 class="h3">Classes where your voice is heard</h3>
+        <p>Focused class sizes and faculty office hours mean questions get answered and progress is noticed early.</p>
+        <ul><li>Faculty mentorship<span>Every term</span></li><li>Practicum and internships<span>Program-based</span></li><li>Learning resource center<span>On campus</span></li></ul>
+      </div>
+    </div>
+    <div class="exp-row flip">
+      <div class="exp-media rv"><div class="ph cool" data-label="Photo — Student organization fair" role="img" aria-label="Placeholder: student organization fair"><span class="grain"></span></div></div>
+      <div class="exp-copy rv" style="--i:1">
+        <p class="kicker">Community</p>
+        <h3 class="h3">Organizations, athletics and service</h3>
+        <p>Build friendships and leadership skills outside the classroom through student councils, clubs, sports and outreach.</p>
+        <p style="margin-top:24px"><a class="link" href="#experience">Explore campus life <span class="arr" aria-hidden="true">&rarr;</span></a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. DIGITAL CAMPUS / PORTAL PREVIEW -->
+<section class="sec dark" id="portal" aria-labelledby="dc-h">
+  <div class="wrap dc-grid">
+    <div>
+      <p class="kicker">Digital campus</p>
+      <h2 class="h2" id="dc-h" style="margin-top:18px">One portal for your whole school life</h2>
+      <p class="lede" style="margin-top:20px">Students, teachers and staff each get a workspace designed for what they do every day.</p>
+      <ul class="roles" role="tablist" aria-label="Portal roles">
+        <li><button role="tab" aria-selected="true" data-v="student">Student<span class="meta">Grades · Schedule · Payments</span></button></li>
+        <li><button role="tab" aria-selected="false" data-v="teacher" tabindex="-1">Teacher<span class="meta">Classes · Attendance · Grades</span></button></li>
+        <li><button role="tab" aria-selected="false" data-v="registrar" tabindex="-1">Registrar<span class="meta">Records · Enrollment · Documents</span></button></li>
+        <li><button role="tab" aria-selected="false" data-v="cashier" tabindex="-1">Cashier<span class="meta">Payments · Receipts · Balances</span></button></li>
+      </ul>
+      <p style="margin-top:32px"><a class="btn btn-light" href="#portal">Sign in to the portal <span class="arr" aria-hidden="true">&rarr;</span></a></p>
+    </div>
+    <div class="mock rv" role="tabpanel" aria-label="Portal preview" aria-live="polite">
+      <div class="mock-bar"><i></i><i></i><i></i><span id="mockUrl">portal.bruceclass / student</span></div>
+      <div class="mock-body">
+        <div class="mock-side" id="mockSide"></div>
+        <div class="mock-main mock-view" id="mockMain"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. CAMPUS HIGHLIGHTS -->
+<section class="sec" aria-labelledby="hl-h">
+  <div class="wrap sec-head">
+    <div><p class="kicker">Campus highlights</p><h2 class="h2" id="hl-h">Spaces built for learning</h2></div>
+    <div class="hl-controls"><button class="icon-btn" id="hlPrev" aria-label="Previous highlight">&larr;</button><button class="icon-btn" id="hlNext" aria-label="Next highlight">&rarr;</button></div>
+  </div>
+  <div class="hl-track" id="hlTrack" tabindex="0" aria-label="Campus highlights, scrollable">
+    <article><div class="zoom"><div class="ph cool" data-label="Photo — Computer laboratory" role="img" aria-label="Placeholder: computer laboratory"><span class="grain"></span></div></div><h3>Computer laboratories</h3><p>Hands-on labs for programming, networking and design.</p></article>
+    <article><div class="zoom"><div class="ph warm" data-label="Photo — Library reading room" role="img" aria-label="Placeholder: library reading room"><span class="grain"></span></div></div><h3>Library &amp; learning commons</h3><p>Quiet study, group rooms and digital resources.</p></article>
+    <article><div class="zoom"><div class="ph deep" data-label="Photo — Health skills laboratory" role="img" aria-label="Placeholder: health skills laboratory"><span class="grain"></span></div></div><h3>Health skills laboratory</h3><p>Simulation space for midwifery and caregiving students.</p></article>
+    <article><div class="zoom"><div class="ph" data-label="Photo — Gymnasium and sports court" role="img" aria-label="Placeholder: gymnasium"><span class="grain"></span></div></div><h3>Gymnasium</h3><p>Athletics, assemblies and school-wide events.</p></article>
+    <article><div class="zoom"><div class="ph warm" data-label="Photo — Hospitality training room" role="img" aria-label="Placeholder: hospitality training room"><span class="grain"></span></div></div><h3>Hospitality training room</h3><p>Real-world practice for tourism management students.</p></article>
+  </div>
+</section>
+
+<!-- 9. STATISTICS / ACHIEVEMENTS -->
+<section class="sec alt" aria-labelledby="st-h" style="padding-block:clamp(64px,8vw,112px)">
+  <div class="wrap">
+    <div class="sec-head"><div><p class="kicker">By the record</p><h2 class="h2" id="st-h">Outcomes we measure</h2></div><p class="meta">Figures are placeholders until verified by the registrar.</p></div>
+    <div class="stats">
+      <div class="rv"><b class="ph-num">[metric]</b><span>Students enrolled this school year</span></div>
+      <div class="rv" style="--i:1"><b class="ph-num">[metric]</b><span>Licensure exam passing rate</span></div>
+      <div class="rv" style="--i:2"><b class="ph-num">[metric]</b><span>Graduates employed within a year</span></div>
+      <div class="rv" style="--i:3"><b class="ph-num">[metric]</b><span>Years serving our community</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10. NEWS -->
+<section class="sec" id="news" aria-labelledby="news-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Newsroom</p><h2 class="h2" id="news-h">Stories from campus</h2></div>
+      <a class="link" href="#news">All news <span class="arr" aria-hidden="true">&rarr;</span></a>
+    </div>
+    <div class="news">
+      <article class="feature rv"><a href="#news">
+        <div class="zoom"><div class="ph cool" data-label="Photo — Feature story hero image" role="img" aria-label="Placeholder: feature story image"><span class="grain"></span></div></div>
+        <p class="meta" style="margin-top:20px">Academics · [Date] · 5 min read</p>
+        <h3>IT students present capstone systems built for local organizations</h3>
+        <p>Final-year teams demonstrated working software to partner offices, with faculty and industry guests on the review panel.</p>
+      </a></article>
+      <div class="stack">
+        <article class="rv" style="--i:1"><a href="#news"><div class="zoom"><div class="ph warm" data-label="Photo" role="img" aria-label="Placeholder image"><span class="grain"></span></div></div><div><p class="meta">Education · [Date]</p><h3>Education majors complete their first teaching demonstrations</h3></div></a></article>
+        <article class="rv" style="--i:2"><a href="#news"><div class="zoom"><div class="ph" data-label="Photo" role="img" aria-label="Placeholder image"><span class="grain"></span></div></div><div><p class="meta">Athletics · [Date]</p><h3>Varsity teams open the intramural season</h3></div></a></article>
+        <article class="rv" style="--i:3"><a href="#news"><div class="zoom"><div class="ph deep" data-label="Photo" role="img" aria-label="Placeholder image"><span class="grain"></span></div></div><div><p class="meta">Community · [Date]</p><h3>Health students lead a community wellness outreach</h3></div></a></article>
+      </div>
+      <article class="video rv"><a href="#news" style="position:relative;display:block">
+          <div class="zoom"><div class="ph deep" data-label="Video — Campus film, poster frame" role="img" aria-label="Placeholder: video poster"><span class="grain"></span></div></div>
+          <span class="play" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M6 4l10 6-10 6z" fill="currentColor"/></svg></span>
+          <span class="sr-only">Play video: A day at Bruce Class</span>
+        </a>
+        <div><p class="kicker">Video feature</p><h3 class="h3" style="margin-top:16px">A day at Bruce Class</h3><p style="color:var(--muted);margin-top:12px">Follow students from morning classes to evening practice in a short film about campus life.</p><p class="meta" style="margin-top:18px">[Duration]</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 11. EVENTS -->
+<section class="sec alt" id="events" aria-labelledby="ev-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Events</p><h2 class="h2" id="ev-h">On the calendar</h2></div>
+      <a class="link" href="#events">Full calendar <span class="arr" aria-hidden="true">&rarr;</span></a>
+    </div>
+    <ul class="events">
+      <li class="rv"><a href="#events"><span class="d">[DD]<small>[Mon] · [Day]</small></span><div><h3>Campus open house</h3><p>Tour facilities, meet faculty and ask about admissions.</p></div><span class="where">Main campus<br>[Time]</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></a></li>
+      <li class="rv" style="--i:1"><a href="#events"><span class="d">[DD]<small>[Mon] · [Day]</small></span><div><h3>Entrance examination</h3><p>For first-year and transferee applicants.</p></div><span class="where">Examination rooms<br>[Time]</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></a></li>
+      <li class="rv" style="--i:2"><a href="#events"><span class="d">[DD]<small>[Mon] · [Day]</small></span><div><h3>Foundation week</h3><p>A week of programs, competitions and alumni gatherings.</p></div><span class="where">Gymnasium<br>All day</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 12. CALL TO ACTION -->
+<section class="cta" id="admissions" aria-labelledby="cta-h">
+  <div class="wrap">
+    <div class="cta-box">
+      <div style="position:relative;z-index:1">
+        <p class="kicker" style="color:var(--accent-on-dark)">Admissions</p>
+        <h2 class="h2" id="cta-h" style="margin-top:18px">Your next chapter starts here.</h2>
+        <p class="lede" style="margin-top:20px">Apply online in minutes. Our admissions team will guide you through every step.</p>
+      </div>
+      <div>
+        <ol class="cta-steps"><li>Choose your program</li><li>Submit your application and requirements</li><li>Take the entrance exam, if required</li><li>Pay fees and confirm enrollment</li></ol>
+        <div class="actions"><a class="btn btn-light" href="#admissions">Apply now <span class="arr" aria-hidden="true">&rarr;</span></a><a class="btn btn-ghost" href="#admissions">Talk to admissions</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- 13. FOOTER -->
+<footer class="foot dark">
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <p class="big">Where ambition becomes achievement.</p>
+        <form class="news-form" onsubmit="event.preventDefault()"><label class="sr-only" for="em">Email address</label><input id="em" type="email" placeholder="Email for school updates" autocomplete="email"><button type="submit">Subscribe &rarr;</button></form>
+      </div>
+      <div><h4>School</h4><ul><li><a href="#about">About</a></li><li><a href="#programs">Academics</a></li><li><a href="#">Faculty</a></li><li><a href="#news">News</a></li><li><a href="#events">Events</a></li></ul></div>
+      <div><h4>Admissions</h4><ul><li><a href="#admissions">How to apply</a></li><li><a href="#">Requirements</a></li><li><a href="#">Tuition &amp; fees</a></li><li><a href="#">Scholarships</a></li></ul></div>
+      <div><h4>Portals</h4><ul><li><a href="#portal">Student</a></li><li><a href="#portal">Teacher</a></li><li><a href="#portal">Registrar</a></li><li><a href="#portal">Cashier</a></li><li><a href="#">Contact</a></li></ul></div>
+    </div>
+    <div class="foot-bot"><p class="meta">&copy; 2026 Bruce Class. All rights reserved.</p><p class="meta">[Campus address] · [Phone] · [Email]</p></div>
+  </div>
+</footer>
+
+<script>
+document.body.classList.remove('no-js');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Nav: elevate on scroll
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('scrolled', scrollY > 24);
+addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+// Mobile drawer
+const burger = document.getElementById('burger'), drawer = document.getElementById('drawer');
+const setDrawer = open => {
+  burger.setAttribute('aria-expanded', open); drawer.classList.toggle('open', open);
+  burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  document.body.style.overflow = open ? 'hidden' : '';
+  if (open) drawer.querySelector('a').focus();
+};
+burger.addEventListener('click', () => setDrawer(burger.getAttribute('aria-expanded') !== 'true'));
+drawer.addEventListener('click', e => { if (e.target.closest('a')) setDrawer(false); });
+addEventListener('keydown', e => { if (e.key === 'Escape' && drawer.classList.contains('open')) { setDrawer(false); burger.focus(); } });
+
+// Scroll reveal
+if (!reduce && 'IntersectionObserver' in window) {
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+} else document.querySelectorAll('.rv').forEach(el => el.classList.add('in'));
+
+// Program filters + hover preview
+const list = document.getElementById('progList'), img = document.getElementById('progImg'), cap = document.getElementById('progCap');
+document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
+  document.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', x === c));
+  list.querySelectorAll('li').forEach(li => li.hidden = !(c.dataset.f === 'all' || li.dataset.c === c.dataset.f));
+}));
+list.querySelectorAll('li').forEach(li => {
+  const show = () => { img.className = 'ph ' + li.dataset.img; img.dataset.label = 'Photo — ' + li.dataset.cap; cap.textContent = li.dataset.cap; };
+  li.addEventListener('mouseenter', show); li.addEventListener('focusin', show);
+});
+
+// Portal preview tabs
+const views = {
+  student:{url:'student', side:['Dashboard','Grades','Schedule','Payments','Enrollment','Profile'], tiles:[['General average','[—]'],['Balance due','[—]']], sched:[['8:00','Data Structures','Rm 204'],['10:30','Technical Writing','Rm 112'],['1:00','Systems Analysis','Lab 2']], title:"Today's classes"},
+  teacher:{url:'teacher', side:['Dashboard','Classes','Students','Attendance','Grades','Announcements'], tiles:[['Classes today','[—]'],['Grades to post','[—]']], sched:[['8:00','BSIT 2-A','Attendance open'],['10:30','BSIT 3-B','Quiz'],['1:00','BSIT 4-A','Consultation']], title:'Teaching schedule'},
+  registrar:{url:'registrar', side:['Dashboard','Student records','Enrollment','Verification','Documents','Reports'], tiles:[['Pending applications','[—]'],['Document requests','[—]']], sched:[['Queue','Transcript request','Pending'],['Queue','Enrollment verification','Review'],['Queue','Transfer credentials','Received']], title:'Work queue'},
+  cashier:{url:'cashier', side:['Dashboard','Payments','Enrollment fees','Receipts','Balances','Reports'], tiles:[['Collected today','[—]'],['Receipts issued','[—]']], sched:[['OR-[#]','Enrollment fee','Posted'],['OR-[#]','Tuition, installment','Posted'],['OR-[#]','Miscellaneous fee','Pending']], title:'Recent transactions'}
+};
+const side = document.getElementById('mockSide'), main = document.getElementById('mockMain'), url = document.getElementById('mockUrl');
+const render = k => {
+  const v = views[k];
+  url.textContent = 'portal.bruceclass / ' + v.url;
+  side.innerHTML = v.side.map((s,i) => `<div class="${i?'':'on'}">${s}</div>`).join('');
+  main.innerHTML = v.tiles.map(t => `<div class="tile"><p class="meta">${t[0]}</p><b>${t[1]}</b><div class="skel" style="width:60%"></div></div>`).join('') +
+    `<div class="tile wide"><p class="meta">${v.title}</p><ul class="sched">${v.sched.map(r => `<li><span>${r[0]}</span>${r[1]}<span>${r[2]}</span></li>`).join('')}</ul></div>`;
+};
+render('student');
+const tabs = [...document.querySelectorAll('.roles [role=tab]')];
+const select = t => {
+  tabs.forEach(x => { x.setAttribute('aria-selected', x === t); x.tabIndex = x === t ? 0 : -1; });
+  if (reduce) return render(t.dataset.v);
+  main.classList.add('fading'); setTimeout(() => { render(t.dataset.v); main.classList.remove('fading'); }, 200);
+};
+tabs.forEach((t,i) => {
+  t.addEventListener('click', () => select(t));
+  t.addEventListener('keydown', e => {
+    const d = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1 : e.key === 'ArrowUp' || e.key === 'ArrowLeft' ? -1 : 0;
+    if (d) { e.preventDefault(); const n = tabs[(i + d + tabs.length) % tabs.length]; n.focus(); select(n); }
+  });
+});
+
+// Highlights carousel
+const track = document.getElementById('hlTrack');
+const step = () => track.querySelector('article').offsetWidth + 20;
+document.getElementById('hlPrev').onclick = () => track.scrollBy({left:-step(), behavior: reduce ? 'auto' : 'smooth'});
+document.getElementById('hlNext').onclick = () => track.scrollBy({left: step(), behavior: reduce ? 'auto' : 'smooth'});
+</script>
+</body>
+</html>
