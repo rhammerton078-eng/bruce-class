@@ -150,6 +150,15 @@ require_once(__DIR__ . '/theme/public_header.php');
     if (ev.key === 'Escape' && !modal.hidden) { close(); }
   });
 
+  /* Deep link from the homepage portal cards: ?role=Teacher opens that
+     role's sign-in popup directly. Unknown roles are ignored. */
+  (function () {
+    var m = window.location.search.match(/[?&]role=([A-Za-z]+)/);
+    if (!m) { return; }
+    var card = document.querySelector('.sjcs-signin[data-role="' + m[1] + '"]');
+    if (card) { open(card.getAttribute('data-role'), card.getAttribute('data-icon')); }
+  })();
+
   /* A failed sign-in sends us back here with ?err=... - reopen the popup
      with the reason shown, then clean the URL. */
   (function () {
