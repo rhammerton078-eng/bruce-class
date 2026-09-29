@@ -1,5 +1,5 @@
 =======================================================================
-BRUCE SOLUTIONS
+BRUCE SOLUTIONS EDITED REVISED
 Student and Alumni Records Management System
 Version 3.0.5
 =======================================================================
